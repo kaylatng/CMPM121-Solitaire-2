@@ -25,11 +25,11 @@ I am also using sequencing patterns, specifically in the update method when I pr
 
 ### FEEDBACK
 Reviewer 1: Maddison Lobo \
-Comments: comment here. \
+Comments: add comment here. \
 Reviewer 2: \
-Comments: comment here. \
+Comments: add comment here. \
 Reviewer 3: \
-Comments: comment here.
+Comments: add comment here.
 
 ### POSTMORTEM
 
