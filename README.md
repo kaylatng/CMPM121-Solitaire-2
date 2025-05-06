@@ -24,9 +24,12 @@ SEQUENCING\
 I am also using sequencing patterns, specifically in the update method when I program the game to update and draw cards as the user interacts with the objects.
 
 ### FEEDBACK
-Reviewer 1: Maddison Lobo
-Reviewer 2:
-Reviewer 3:
+Reviewer 1: Maddison Lobo \
+Comments: comment here. \
+Reviewer 2: \
+Comments: comment here. \
+Reviewer 3: \
+Comments: comment here. \
 
 ### POSTMORTEM
 
