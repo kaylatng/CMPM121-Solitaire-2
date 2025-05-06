@@ -29,7 +29,7 @@ Comments: comment here. \
 Reviewer 2: \
 Comments: comment here. \
 Reviewer 3: \
-Comments: comment here. \
+Comments: comment here.
 
 ### POSTMORTEM
 
