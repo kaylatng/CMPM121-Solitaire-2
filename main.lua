@@ -1,6 +1,6 @@
 -- Kayla Nguyen
--- CMPM 121 - Klondike Solitaire
--- 4-22-25
+-- CMPM 121 - Klondike Solitaire, But Better
+-- 5-7-25
 
 -- Main
 
@@ -13,7 +13,7 @@ require "game_manager"
 
 function love.load()
   love.window.setMode(960, 640)
-  love.window.setTitle("Klondike Solitaire")
+  love.window.setTitle("Klondike Solitaire, But Better")
   love.graphics.setBackgroundColor(0, 0.7, 0.2, 1) -- green
   
   -- math.randomseed(os.time())

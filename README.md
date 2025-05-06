@@ -1,6 +1,6 @@
 # KLONDIKE SOLITAIRE
 
-CMPM 121 Assignment 1\
+CMPM 121 Assignment 2\
 Name: Kayla Nguyen\
 Game Title: _Klondike Solitaire_
 
