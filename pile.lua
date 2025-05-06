@@ -5,6 +5,12 @@ local Constants = require("constants")
 
 PileClass = {}
 
+local suitImage = nil
+
+function PileClass:loadSuit(suit)
+  return love.graphics.newImage("assets/" .. tostring(suit) .. ".png")
+end
+
 function PileClass:new(x, y, type)
   local pile = {}
   local metadata = {__index = PileClass}
@@ -27,11 +33,21 @@ end
 
 function PileClass:draw()
   -- Outline
-  love.graphics.setColor(0, 0, 0, 0.5)
+  love.graphics.setColor(0, 0, 0, 0.3) -- 1, 1, 1 white
+  love.graphics.setLineWidth(2)
   love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
   
   if self.type == "foundation" then
-    love.graphics.print(self.suit, self.position.x + 6, self.position.y + 30)
+    love.graphics.rectangle("fill", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
+
+    local color = {0, 0, 0, 0.4}
+    if not suitImage then
+      suitImage = self:loadSuit(self.suit)
+    end
+      
+    love.graphics.setColor(color)
+    love.graphics.draw(suitImage, self.position.x - Constants.CARD_WIDTH/4, self.position.y - Constants.CARD_HEIGHT/4 - 5, 0 , 1.5, 1.5)
+    suitImage = nil
   end
 
   -- Cards
@@ -73,6 +89,7 @@ function PileClass:updateCardPositions()
       -- Reasign z position
       card.zOrder = i
   
+      -- TO-DO: card prematurely flips
       if i == #self.cards then
         card.faceUp = true
       else
@@ -223,16 +240,21 @@ function TableauPile:acceptCards(cards, sourcePile)
     end
   end
 
-  local topCard = self:getTopCard()
-  local firstCard = cards[1]
+  local topCard = self:getTopCard() -- top of tableau
+  local firstCard = cards[1] -- held card
 
-  if firstCard:getValue() == topCard:getValue() - 1 and 
-    (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
+  local top = #sourcePile.cards
+
+  if firstCard:getValue() == topCard:getValue() - 1
+    and (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
+    -- firstCard:setSolved()
+    -- topCard:setSolved()
+    print("top card: " .. tostring(topCard.suit) .. ", first card: " .. tostring(firstCard.suit))
     for _, card in ipairs(cards) do
       self:addCard(card)
-      -- topCard:flip()
       card:release()
     end
+    topCard.faceUp = true
     return true
   end
 
@@ -242,6 +264,12 @@ end
 -- Stock pile (drawing cards from)
 StockPile = {}
 setmetatable(StockPile, {__index = PileClass})
+
+local resetImage = nil
+
+function StockPile:loadImage()
+  return love.graphics.newImage("assets/reset.png")
+end
 
 function StockPile:new(x, y, wastePile)
   local pile = PileClass:new(x, y, "stock")
@@ -254,7 +282,11 @@ function StockPile:new(x, y, wastePile)
 end
 
 function StockPile:draw()
-  love.graphics.setColor(0, 0, 0, 0.5)
+  if not resetImage then
+    resetImage = self:loadImage()
+  end
+
+  love.graphics.setColor(0, 0, 0, 0.3)
   love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
   
   if #self.cards > 0 then
@@ -265,9 +297,8 @@ function StockPile:draw()
       love.graphics.print(#self.cards, self.position.x + 10, self.position.y + 10)
     end
   else
-    love.graphics.setColor(0, 0, 0, 0.7)
-    love.graphics.circle("line", self.position.x + self.size.x / 2, self.position.y + self.size.y / 2, 20)
-    love.graphics.print("RESET", self.position.x + self.size.x / 2 - 10, self.position.y + self.size.y / 2 - 10, 0, 2)
+    love.graphics.setColor(0, 0, 0, 0.3)
+    love.graphics.draw(resetImage, self.position.x, self.position.y)
   end
 end
 

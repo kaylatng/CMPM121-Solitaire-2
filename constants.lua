@@ -2,15 +2,15 @@
 
 local Constants = {
 
-  PADDING_X = 10, -- 5,
-  PADDING_Y = 10, -- 5,
+  PADDING_X = 5,
+  PADDING_Y = 5,
 
-  PILE_WIDTH = 124, -- 62,
-  PILE_HEIGHT = 174, -- 87,
-  PILE_RADIUS = 15,
+  PILE_WIDTH = 114,
+  PILE_HEIGHT = 164,
+  PILE_RADIUS = 12,
 
-  CARD_WIDTH = 104, -- 52,
-  CARD_HEIGHT = 154, -- 77,
+  CARD_WIDTH = 104,
+  CARD_HEIGHT = 154,
   CARD_RADIUS = 12,
 
 }

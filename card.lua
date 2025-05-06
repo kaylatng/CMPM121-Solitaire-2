@@ -11,7 +11,6 @@ CARD_STATE = {
   IDLE = 0,
   MOUSE_OVER = 1,
   GRABBED = 2,
-  INACTIVE = 3,
 }
 
 SUITS = {"clubs", "spades", "diamonds", "hearts"}
@@ -38,6 +37,7 @@ function CardClass:new(suit, value, xPos, yPos, faceUp)
   card.faceUp = faceUp or false
   card.dragOffset = Vector(0, 0)
   card.zOrder = 0
+  card.solved = false
   
   return card
 end
@@ -100,6 +100,11 @@ end
 
 function CardClass:flip()
   self.faceUp = not self.faceUp
+end
+
+function CardClass:setSolved()
+  self.faceUp = true
+  self.solved = true
 end
 
 function CardClass:checkForMouseOver(grabber)
