@@ -135,7 +135,7 @@ function GameManager:mousePressed(x, y, button)
       self.moves = self.moves + 1
     end
     return
-  else
+  else -- not holding cards
     for _, pile in ipairs(self.piles) do
       if pile:checkForMouseOver(mousePos) then
         if pile.type == "stock" then
@@ -146,8 +146,10 @@ function GameManager:mousePressed(x, y, button)
         end
   
         local card = pile:getCardAt(mousePos)
+        print("CARD: " .. tostring(card.suit).. " " .. tostring(card.value))
         if card then
           if self.grabber:tryGrab(card, pile) then
+            -- TO-DO
           end
           return
         end

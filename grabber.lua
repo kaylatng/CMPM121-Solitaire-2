@@ -35,14 +35,13 @@ function GrabberClass:update(dt)
 end
 
 function GrabberClass:tryGrab(card, stack)
-  if #self.heldCards > 0 then 
+  if #self.heldCards > 0 then
     return false 
   end
 
   if not card.faceUp then
     return false
   end
-  
   self.grabPos = self.currentMousePos
   print("GRAB - " .. tostring(self.grabPos.x) .. ", " .. tostring(self.grabPos.y))
   -- print("CARD: " .. tostring(card.value))

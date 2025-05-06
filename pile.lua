@@ -89,28 +89,30 @@ function PileClass:updateCardPositions()
       -- Reasign z position
       card.zOrder = i
   
-      -- TO-DO: card prematurely flips
       if i == #self.cards then
-        card.faceUp = true
+        card:setFaceUp()
       else
-        card.faceUp = false
+        card:setFaceDown()
       end
     end
   
+    -- TO-DO modify so card does not flip early
     if #self.cards > 0 then
       local topCard = self.cards[#self.cards]
       if not topCard.faceUp then
-        topCard.faceUp = true
+        -- topCard.faceUp = true
+        topCard:setFaceUp()
       end
     end
 
+  -- pile is stock, solved card constraint does not apply
   elseif self.type == "stock" then
     for i, card in ipairs(self.cards) do
       card.targetPosition = Vector(self.position.x, self.position.y)
       card.faceUp = false
     end
 
-  else -- type == waste
+  else -- waste pile/draw 3, solved card constraint does not apply
     local visibleCards = math.min(3, #self.cards)
 
     for i = 1, #self.cards do
@@ -245,16 +247,15 @@ function TableauPile:acceptCards(cards, sourcePile)
 
   local top = #sourcePile.cards
 
-  if firstCard:getValue() == topCard:getValue() - 1
-    and (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
-    -- firstCard:setSolved()
-    -- topCard:setSolved()
-    print("top card: " .. tostring(topCard.suit) .. ", first card: " .. tostring(firstCard.suit))
+  if firstCard:getValue() == topCard:getValue() - 1 then
+    -- and (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
     for _, card in ipairs(cards) do
       self:addCard(card)
       card:release()
     end
-    topCard.faceUp = true
+    -- print("SOLVED TOP: " .. tostring(topCard.suit) .. " " .. tostring(topCard.value) .. ", FIRST: " .. tostring(firstCard.suit) .. " " .. tostring(firstCard.value))
+    firstCard:setSolved()
+    topCard:setSolved()
     return true
   end
 

@@ -34,11 +34,11 @@ function CardClass:new(suit, value, xPos, yPos, faceUp)
   card.targetPosition = Vector(xPos, yPos)
   card.size = Vector(Constants.CARD_WIDTH, Constants.CARD_HEIGHT)
   card.state = CARD_STATE.IDLE
-  card.faceUp = faceUp or false
   card.dragOffset = Vector(0, 0)
   card.zOrder = 0
   card.solved = false
-  
+  card.faceUp = faceUp or false
+
   return card
 end
 
@@ -93,13 +93,29 @@ function CardClass:draw()
   end
   
   love.graphics.draw(spritesheet, quad, self.position.x, self.position.y)
+  love.graphics.setColor(0, 0, 0, 1)
+  love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y)
 
   -- Print card state
   love.graphics.print(tostring(self.state), self.position.x + 50, self.position.y - 20)
 end
 
-function CardClass:flip()
-  self.faceUp = not self.faceUp
+-- function CardClass:flip()
+--   if self.solved ~= true then
+--     self.faceUp = not self.faceUp
+--   end
+-- end
+
+function CardClass:setFaceUp()
+  if not self.solved then
+    self.faceUp = true
+  end
+end
+
+function CardClass:setFaceDown()
+  if not self.solved then
+    self.faceUp = false
+  end
 end
 
 function CardClass:setSolved()
