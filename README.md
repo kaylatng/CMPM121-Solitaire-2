@@ -35,7 +35,7 @@ A postmortem on where you assess the key pain points of your Solitaire project (
 ### ASSETS
 
 Sprites: Modified/scaled up spritesheet from https://emptysevenone.itch.io/playing-cards. \
-Font: N/A
-Music: N/A
-Misc: Code snippets from CMPM 121 live coding examples used.
+Font: N/A \
+Music: N/A \
+Misc: Code snippets from CMPM 121 live coding examples used. \
 I didn’t make any of the assets in this project.
