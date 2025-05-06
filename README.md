@@ -2,7 +2,7 @@
 
 CMPM 121 Assignment 1\
 Name: Kayla Nguyen\
-Game Title: _Klondike Solitaire_
+Game Title: _Klondike Solitaire, But Better_
 
 ## IMPLEMENTATION
 
