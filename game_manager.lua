@@ -17,6 +17,7 @@ function GameManager:new()
   game.grabber = GrabberClass:new()
   game.isInitialized = false
   game.moves = 0
+  game.won = false
   
   return game
 end
@@ -26,19 +27,19 @@ function GameManager:initialize()
   if self.isInitialized then return end
   
   for i, suit in ipairs(SUITS) do
-    local foundationPile = FoundationPile:new(430 + (i-1) * 130, 50, suit)
+    local foundationPile = FoundationPile:new(430 + (i-1) * 130, 30, suit)
     table.insert(self.piles, foundationPile)
   end
 
   for i = 1, 7 do
-    local tableauPile = TableauPile:new(40 + (i-1) * 130, 250, i)
+    local tableauPile = TableauPile:new(40 + (i-1) * 130, 220, i)
     table.insert(self.piles, tableauPile)
   end
 
-  local wastePile = WastePile:new(170, 50)
+  local wastePile = WastePile:new(170, 30)
   table.insert(self.piles, wastePile)
 
-  local stockPile = StockPile:new(40, 50, wastePile)
+  local stockPile = StockPile:new(40, 30, wastePile)
   table.insert(self.piles, stockPile)
 
   local deck = self:createDeck()
@@ -95,10 +96,16 @@ function GameManager:dealCards(deck, piles)
 end
 
 function GameManager:update(dt)
+  if self.won then return end
+
   self.grabber:update(dt)
 
   for _, pile in ipairs(self.piles) do
     pile:update(dt)
+  end
+
+  if self:checkForWin() then
+    self.won = true
   end
 end
 
@@ -114,8 +121,15 @@ function GameManager:draw()
   love.graphics.setColor(1, 1, 1, 1)
 
   love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.print("Mouse: " .. tostring(self.grabber.currentMousePos.x) .. ", " .. tostring(self.grabber.currentMousePos.y))
-  love.graphics.print("Moves: " .. tostring(self.moves), 0, 15)
+  -- love.graphics.print("Mouse: " .. tostring(self.grabber.currentMousePos.x) .. ", " .. tostring(self.grabber.currentMousePos.y))
+  love.graphics.print("Moves: " .. tostring(self.moves), 0, 0) -- y = 15
+
+  if self.won then
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.printf("You Win!", 0, love.graphics.getHeight() / 2 - 20, love.graphics.getWidth(), "center")
+    love.graphics.printf("Press 'R' to play again", 0, love.graphics.getHeight() / 2 + 80, love.graphics.getWidth(), "center")
+  end
+
 end
 
 function GameManager:mousePressed(x, y, button)
@@ -146,7 +160,7 @@ function GameManager:mousePressed(x, y, button)
         end
   
         local card = pile:getCardAt(mousePos)
-        print("CARD: " .. tostring(card.suit).. " " .. tostring(card.value))
+        -- print("CARD: " .. tostring(card.suit).. " " .. tostring(card.value))
         if card then
           if self.grabber:tryGrab(card, pile) then
             -- TO-DO
@@ -156,24 +170,6 @@ function GameManager:mousePressed(x, y, button)
       end
     end
   end
-
-  -- for _, pile in ipairs(self.piles) do
-  --   if pile:checkForMouseOver(mousePos) then
-  --     if pile.type == "stock" then
-  --       if pile:onClick() then
-  --         self.moves = self.moves + 1
-  --       end
-  --       return
-  --     end
-
-  --     local card = pile:getCardAt(mousePos)
-  --     if card then
-  --       if self.grabber:tryGrab(card, pile) then
-  --       end
-  --       return
-  --     end
-  --   end
-  -- end
 end
 
 function GameManager:mouseReleased(x, y, button)
@@ -192,4 +188,23 @@ function GameManager:mouseReleased(x, y, button)
       self.moves = self.moves + 1
     end
   end
+end
+
+function GameManager:checkForWin()
+  local foundationPiles = {}
+  
+  for _, pile in ipairs(self.piles) do
+    if pile.type == "foundation" then
+      table.insert(foundationPiles, pile)
+    end
+  end
+  
+  -- Check if all foundation stacks have 13 cards
+  for _, pile in ipairs(foundationPiles) do
+    if #pile.cards < 13 then
+      return false
+    end
+  end
+  
+  return true
 end

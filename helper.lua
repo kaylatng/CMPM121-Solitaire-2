@@ -30,4 +30,4 @@ function getCardColor(suit)
   end
 end
 
--- removed getValue function
+-- Removed getValue function

@@ -94,17 +94,13 @@ function CardClass:draw()
   
   love.graphics.draw(spritesheet, quad, self.position.x, self.position.y)
   love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y)
+
+  -- Debug outline
+  -- love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y)
 
   -- Print card state
   love.graphics.print(tostring(self.state), self.position.x + 50, self.position.y - 20)
 end
-
--- function CardClass:flip()
---   if self.solved ~= true then
---     self.faceUp = not self.faceUp
---   end
--- end
 
 function CardClass:setFaceUp()
   if not self.solved then

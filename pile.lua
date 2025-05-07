@@ -73,7 +73,7 @@ function PileClass:removeCard(card)
   return false
 end
 
--- merged all functions to main pile class
+-- Merged all functions to main pile class
 function PileClass:updateCardPositions()
   if self.type == "foundation" then
     for i, card in ipairs(self.cards) do
@@ -90,29 +90,20 @@ function PileClass:updateCardPositions()
       card.zOrder = i
   
       if i == #self.cards then
-        card:setFaceUp()
+        -- card:setFaceUp()
       else
         card:setFaceDown()
       end
     end
-  
-    -- TO-DO modify so card does not flip early
-    if #self.cards > 0 then
-      local topCard = self.cards[#self.cards]
-      if not topCard.faceUp then
-        -- topCard.faceUp = true
-        topCard:setFaceUp()
-      end
-    end
 
-  -- pile is stock, solved card constraint does not apply
+  -- Pile is stock, solved card constraint does not apply
   elseif self.type == "stock" then
     for i, card in ipairs(self.cards) do
       card.targetPosition = Vector(self.position.x, self.position.y)
       card.faceUp = false
     end
 
-  else -- waste pile/draw 3, solved card constraint does not apply
+  else -- Waste pile/draw 3, solved card constraint does not apply
     local visibleCards = math.min(3, #self.cards)
 
     for i = 1, #self.cards do
@@ -142,7 +133,7 @@ end
 
 function PileClass:acceptCards(cards, sourcePile)
 
-  -- returns false if the pile cannot accept cards
+  -- Returns false if the pile cannot accept cards
   return false
 end
 
@@ -242,8 +233,8 @@ function TableauPile:acceptCards(cards, sourcePile)
     end
   end
 
-  local topCard = self:getTopCard() -- top of tableau
-  local firstCard = cards[1] -- held card
+  local topCard = self:getTopCard() -- Top of tableau
+  local firstCard = cards[1] -- Held card
 
   local top = #sourcePile.cards
 
@@ -256,6 +247,11 @@ function TableauPile:acceptCards(cards, sourcePile)
     -- print("SOLVED TOP: " .. tostring(topCard.suit) .. " " .. tostring(topCard.value) .. ", FIRST: " .. tostring(firstCard.suit) .. " " .. tostring(firstCard.value))
     firstCard:setSolved()
     topCard:setSolved()
+    
+    -- Flip sourcePile top card up after a valid move
+    if #sourcePile.cards > 0 then
+      sourcePile.cards[top]:setFaceUp()
+    end
     return true
   end
 
