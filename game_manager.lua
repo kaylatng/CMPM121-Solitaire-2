@@ -4,7 +4,6 @@ require "card"
 require "vector"
 require "pile"
 require "grabber"
-require "helper"
 
 GameManager = {}
 
