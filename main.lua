@@ -37,3 +37,11 @@ end
 function love.mousereleased(x, y, button)
   game:mouseReleased(x, y, button)
 end
+
+function love.keypressed(key)
+  if key == "r" then
+    -- Reset game
+    game = GameManager:new()
+    game:initialize()
+  end
+end

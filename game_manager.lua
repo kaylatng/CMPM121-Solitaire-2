@@ -123,11 +123,13 @@ function GameManager:draw()
   love.graphics.setColor(1, 1, 1, 1)
   -- love.graphics.print("Mouse: " .. tostring(self.grabber.currentMousePos.x) .. ", " .. tostring(self.grabber.currentMousePos.y))
   love.graphics.print("Moves: " .. tostring(self.moves), 0, 0) -- y = 15
-
+  
   if self.won then
+    love.graphics.setColor(0, 0, 0, 0.3)
+    love.graphics.rectangle("fill", 0, 0, 960, 640)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf("You Win!", 0, love.graphics.getHeight() / 2 - 20, love.graphics.getWidth(), "center")
-    love.graphics.printf("Press 'R' to play again", 0, love.graphics.getHeight() / 2 + 80, love.graphics.getWidth(), "center")
+    love.graphics.printf("Press 'R' to play again", 0, love.graphics.getHeight() / 2 + 30, love.graphics.getWidth(), "center")
   end
 
 end
@@ -149,7 +151,7 @@ function GameManager:mousePressed(x, y, button)
       self.moves = self.moves + 1
     end
     return
-  else -- not holding cards
+  else -- Not holding cards
     for _, pile in ipairs(self.piles) do
       if pile:checkForMouseOver(mousePos) then
         if pile.type == "stock" then
@@ -160,10 +162,10 @@ function GameManager:mousePressed(x, y, button)
         end
   
         local card = pile:getCardAt(mousePos)
-        -- print("CARD: " .. tostring(card.suit).. " " .. tostring(card.value))
+
         if card then
           if self.grabber:tryGrab(card, pile) then
-            -- TO-DO
+            -- Sanity check
           end
           return
         end

@@ -32,13 +32,15 @@ function PileClass:update(dt)
 end
 
 function PileClass:draw()
+  -- Stock pile is separate due to reset button
+
   -- Outline
   love.graphics.setColor(0, 0, 0, 0.3) -- 1, 1, 1 white
   love.graphics.setLineWidth(2)
-  love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
+  love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, Constants.PILE_WIDTH, Constants.PILE_HEIGHT, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
   
   if self.type == "foundation" then
-    love.graphics.rectangle("fill", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
+    love.graphics.rectangle("fill", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, Constants.PILE_WIDTH, Constants.PILE_HEIGHT, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
 
     local color = {0, 0, 0, 0.4}
     if not suitImage then
@@ -59,6 +61,10 @@ end
 function PileClass:addCard(card)
   table.insert(self.cards, card)
   self:updateCardPositions()
+  -- Modify size when tablea takes new cards
+  if self.type == "tableau" then 
+    self.size.y = self.size.y + self.verticalOffset
+  end
   return true
 end
 
@@ -91,6 +97,7 @@ function PileClass:updateCardPositions()
   
       if i == #self.cards then
         -- card:setFaceUp()
+        -- do nothing
       else
         card:setFaceDown()
       end
@@ -132,7 +139,6 @@ function PileClass:getTopCard()
 end
 
 function PileClass:acceptCards(cards, sourcePile)
-
   -- Returns false if the pile cannot accept cards
   return false
 end
@@ -176,6 +182,8 @@ function FoundationPile:acceptCards(cards, sourcePile)
     return false
   end
 
+  local top = #sourcePile.cards
+
   local card = cards[1]
   if card.suit ~= self.suit then
     return false
@@ -185,6 +193,11 @@ function FoundationPile:acceptCards(cards, sourcePile)
     if card.value == "ace" then
       self:addCard(card)
       card:release()
+
+      if #sourcePile.cards > 0 and sourcePile.type ~= "foundation" then
+        sourcePile.cards[top]:setFaceUp()
+      end
+
       return true
     else
       return false
@@ -198,6 +211,12 @@ function FoundationPile:acceptCards(cards, sourcePile)
   if cardValue == topValue + 1 then
     self:addCard(card)
     card:release()
+
+    -- Flip source pile card after valid move
+    if #sourcePile.cards > 0 and sourcePile.type ~= "foundation" then
+      sourcePile.cards[top]:setFaceUp()
+    end
+
     return true
   end
 
@@ -220,6 +239,8 @@ function TableauPile:new(x, y, index)
 end
 
 function TableauPile:acceptCards(cards, sourcePile)
+  local top = #sourcePile.cards
+
   if #self.cards == 0 then
     local firstCard = cards[1]
     if firstCard.value == "king" then
@@ -227,6 +248,22 @@ function TableauPile:acceptCards(cards, sourcePile)
         self:addCard(card)
         card:release()
       end
+      firstCard:setSolved()
+
+      local allSolved = true
+
+      if #sourcePile.cards > 1 and sourcePile.type ~= "waste" then
+        for _, card in ipairs(sourcePile.cards) do
+          print(tostring(card.suit) .. " " .. tostring(card.value) .. " " .. tostring(card.solved))
+          if card.solved == false then
+            allSolved = false
+          end
+        end
+        if not allSolved then
+          sourcePile.cards[top]:setFaceUp()
+        end
+      end
+
       return true
     else
       return false
@@ -236,15 +273,13 @@ function TableauPile:acceptCards(cards, sourcePile)
   local topCard = self:getTopCard() -- Top of tableau
   local firstCard = cards[1] -- Held card
 
-  local top = #sourcePile.cards
-
-  if firstCard:getValue() == topCard:getValue() - 1 then
-    -- and (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
+  if firstCard:getValue() == topCard:getValue() - 1 -- then
+    and (topCard:isRed() and firstCard:isBlack() or topCard:isBlack() and firstCard:isRed()) then
     for _, card in ipairs(cards) do
       self:addCard(card)
       card:release()
     end
-    -- print("SOLVED TOP: " .. tostring(topCard.suit) .. " " .. tostring(topCard.value) .. ", FIRST: " .. tostring(firstCard.suit) .. " " .. tostring(firstCard.value))
+
     firstCard:setSolved()
     topCard:setSolved()
     
@@ -284,7 +319,7 @@ function StockPile:draw()
   end
 
   love.graphics.setColor(0, 0, 0, 0.3)
-  love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, self.size.x, self.size.y, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
+  love.graphics.rectangle("line", self.position.x - Constants.PADDING_X, self.position.y - Constants.PADDING_Y, Constants.PILE_WIDTH, Constants.PILE_HEIGHT, Constants.PILE_RADIUS, Constants.PILE_RADIUS)
   
   if #self.cards > 0 then
     self.cards[#self.cards]:draw()
@@ -332,6 +367,7 @@ function WastePile:new(x, y)
   setmetatable(pile, metadata)
   
   pile.horizontalOffset = 20
+  pile.size.x = pile.size.x + 3 * 20
   
   return pile
 end

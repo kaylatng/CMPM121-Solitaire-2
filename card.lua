@@ -68,7 +68,6 @@ function CardClass:draw()
   
   -- Draw drop shadow for non-idle cards
   if self.state ~= CARD_STATE.IDLE then
-    -- print("suit: " .. tostring(self.suit) .. " value: " .. tostring(self.value))
     love.graphics.setColor(0, 0, 0, 0.5) -- color values [0, 1]
     local offset = 4 * (self.state == CARD_STATE.GRABBED and 2 or 1)
     love.graphics.rectangle("fill", self.position.x + offset, self.position.y + offset, self.size.x, self.size.y, Constants.CARD_RADIUS, Constants.CARD_RADIUS)
@@ -115,6 +114,7 @@ function CardClass:setFaceDown()
 end
 
 function CardClass:setSolved()
+  print("solve -- " .. tostring(self.suit) .. " " .. tostring(self.value))
   self.faceUp = true
   self.solved = true
 end
