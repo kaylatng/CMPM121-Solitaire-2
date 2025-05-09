@@ -98,7 +98,7 @@ function CardClass:draw()
   -- love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y)
 
   -- Print card state
-  love.graphics.print(tostring(self.state), self.position.x + 50, self.position.y - 20)
+  -- love.graphics.print(tostring(self.state), self.position.x + 50, self.position.y - 20)
 end
 
 function CardClass:setFaceUp()

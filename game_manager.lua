@@ -122,6 +122,16 @@ function GameManager:draw()
   love.graphics.setColor(1, 1, 1, 1)
   -- love.graphics.print("Mouse: " .. tostring(self.grabber.currentMousePos.x) .. ", " .. tostring(self.grabber.currentMousePos.y))
   love.graphics.print("Moves: " .. tostring(self.moves), 0, 0) -- y = 15
+
+  -- Undo button default
+  love.graphics.setColor(1, 1, 1, 1)
+  love.graphics.setLineWidth(1)
+  love.graphics.rectangle("fill", 315 + 3, 80 + 3, 70, 50, 6, 6)
+  love.graphics.rectangle("fill", 315, 80, 70, 50, 6, 6)
+  -- love.graphics.setColor(0, 0, 0, 1)
+  love.graphics.rectangle("line", 315, 80, 70, 50, 6, 6)
+  love.graphics.setColor(0, 0, 0, 1)
+  love.graphics.print("UNDO", 330, 95)
   
   if self.won then
     love.graphics.setColor(0, 0, 0, 0.3)
