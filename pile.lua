@@ -8,7 +8,7 @@ PileClass = {}
 local suitImage = nil
 
 function PileClass:loadSuit(suit)
-  return love.graphics.newImage("assets/" .. tostring(suit) .. ".png")
+  return love.graphics.newImage("assets/img/" .. tostring(suit) .. ".png")
 end
 
 function PileClass:new(x, y, type)
@@ -300,7 +300,7 @@ setmetatable(StockPile, {__index = PileClass})
 local resetImage = nil
 
 function StockPile:loadImage()
-  return love.graphics.newImage("assets/reset.png")
+  return love.graphics.newImage("assets/img/reset.png")
 end
 
 function StockPile:new(x, y, wastePile)

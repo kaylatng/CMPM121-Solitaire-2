@@ -19,7 +19,7 @@ CARD_VALUES = {"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "que
 local cardSpritesheet, spritesheet = nil
 
 function CardClass:loadSpritesheet()
-  cardSpritesheet = love.graphics.newImage("assets/card_spritesheet.png")
+  cardSpritesheet = love.graphics.newImage("assets/img/card_spritesheet.png")
   return cardSpritesheet
 end
 

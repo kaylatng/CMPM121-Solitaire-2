@@ -13,6 +13,17 @@ local Constants = {
   CARD_HEIGHT = 154,
   CARD_RADIUS = 12,
 
+  BUTTON_X = 315,
+  BUTTON_Y = 80,
+  BUTTON_WIDTH = 70,
+  BUTTON_HEIGHT = 50,
+  BUTTON_RADIUS = 6,
+
+  SOUND_X = 400,
+  SOUND_Y = 100,
+  SOUND_WIDTH = 24,
+  SOUND_HEIGHT = 24,
+
 }
 
 return Constants

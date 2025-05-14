@@ -4,6 +4,8 @@ require "card"
 require "vector"
 require "pile"
 require "grabber"
+require "undo"
+require "sound"
 
 GameManager = {}
 
@@ -17,6 +19,8 @@ function GameManager:new()
   game.isInitialized = false
   game.moves = 0
   game.won = false
+  game.undoButton = ButtonClass:new()
+  game.sound = SoundClass:new()
   
   return game
 end
@@ -117,21 +121,13 @@ function GameManager:draw()
     card:draw()
   end
 
+  self.undoButton:draw()
+
   love.graphics.setColor(1, 1, 1, 1)
 
   love.graphics.setColor(1, 1, 1, 1)
   -- love.graphics.print("Mouse: " .. tostring(self.grabber.currentMousePos.x) .. ", " .. tostring(self.grabber.currentMousePos.y))
   love.graphics.print("Moves: " .. tostring(self.moves), 0, 0) -- y = 15
-
-  -- Undo button default
-  love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.setLineWidth(1)
-  love.graphics.rectangle("fill", 315 + 3, 80 + 3, 70, 50, 6, 6)
-  love.graphics.rectangle("fill", 315, 80, 70, 50, 6, 6)
-  -- love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle("line", 315, 80, 70, 50, 6, 6)
-  love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.print("UNDO", 330, 95)
   
   if self.won then
     love.graphics.setColor(0, 0, 0, 0.3)
@@ -161,6 +157,11 @@ function GameManager:mousePressed(x, y, button)
     end
     return
   else -- Not holding cards
+    if self.undoButton:checkForMouseOver(mousePos) then
+      if self.undoButton:mousePressed() then
+        print("undo")
+      end
+    end
     for _, pile in ipairs(self.piles) do
       if pile:checkForMouseOver(mousePos) then
         if pile.type == "stock" then
@@ -184,6 +185,11 @@ function GameManager:mousePressed(x, y, button)
 end
 
 function GameManager:mouseReleased(x, y, button)
+  local mousePosButton = Vector(x, y)
+  if self.undoButton:checkForMouseOver(mousePosButton) then
+    self.undoButton:mouseReleased()
+  end
+
   if self.grabber:isHoldingCards() then
     local mousePos = Vector(x, y)
     local targetPile = nil
