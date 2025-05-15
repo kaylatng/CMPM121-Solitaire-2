@@ -43,4 +43,4 @@ Sprites: Modified/scaled up spritesheet from https://emptysevenone.itch.io/playi
 Font: N/A \
 Music: Jingle_Win_Synth_06.wav: https://freesound.org/people/LittleRobotSoundFactory/sounds/274181/ \
 Misc: Code snippets from CMPM 121 live coding examples used. \
-I didn’t make any of the assets in this project.
+I didn’t make any of the assets in this project, unless explicitly mentioned.
