@@ -30,18 +30,18 @@ function ButtonClass:draw()
   if self.state ~= BUTTON_STATE.PRESSED then
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setLineWidth(1)
-    love.graphics.rectangle("fill", 315 + 3, 80 + 3, 70, 50, 6, 6)
-    love.graphics.rectangle("fill", 315, 80, 70, 50, 6, 6)
+    love.graphics.rectangle("fill", 330 + 3, 80 + 3, 70, 50, 6, 6)
+    love.graphics.rectangle("fill", 330, 80, 70, 50, 6, 6)
     -- love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.rectangle("line", 315, 80, 70, 50, 6, 6)
+    love.graphics.rectangle("line", 330, 80, 70, 50, 6, 6)
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print("UNDO", 331, 97)
+    love.graphics.print("UNDO", 346, 97)
   else 
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.rectangle("fill", 315 + 3, 80 + 3, 70, 50, 6, 6)
+    love.graphics.rectangle("fill", 330 + 3, 80 + 3, 70, 50, 6, 6)
     love.graphics.setColor(0, 0, 0, 1)
 
-    love.graphics.print("UNDO", 331 + 3, 97 + 3)
+    love.graphics.print("UNDO", 346 + 3, 97 + 3)
   end
 end
 

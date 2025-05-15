@@ -326,7 +326,7 @@ function StockPile:draw()
     
     if #self.cards > 1 then
       love.graphics.setColor(1, 1, 1, 1)
-      love.graphics.print(#self.cards, self.position.x + 10, self.position.y + 10)
+      love.graphics.print(#self.cards, self.position.x + 44, self.position.y + 65)
     end
   else
     love.graphics.setColor(0, 0, 0, 0.3)

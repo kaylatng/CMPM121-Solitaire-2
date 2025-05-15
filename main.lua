@@ -16,7 +16,7 @@ function love.load()
   love.window.setTitle("Klondike Solitaire, But Better")
   love.graphics.setBackgroundColor(0, 0.7, 0.2, 1) -- green
   
-  -- math.randomseed(os.time())
+  math.randomseed(os.time())
   
   game = GameManager:new()
   game:initialize()

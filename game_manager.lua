@@ -19,7 +19,6 @@ function GameManager:new()
   game.moves = 0
   game.won = false
   game.undoButton = ButtonClass:new()
-  game.sound = SoundClass:new()
   
   return game
 end
@@ -158,7 +157,7 @@ function GameManager:mousePressed(x, y, button)
   else -- Not holding cards
     if self.undoButton:checkForMouseOver(mousePos) then
       if self.undoButton:mousePressed() then
-        print("undo")
+        -- print("undo")
       end
     end
     for _, pile in ipairs(self.piles) do
