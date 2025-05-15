@@ -43,8 +43,6 @@ function GrabberClass:tryGrab(card, stack)
     return false
   end
   self.grabPos = self.currentMousePos
-  print("GRAB - " .. tostring(self.grabPos.x) .. ", " .. tostring(self.grabPos.y))
-  -- print("CARD: " .. tostring(card.value))
 
   local cardsToGrab = {} -- Grab pile
   if stack.type == "tableau" then
@@ -96,7 +94,6 @@ function GrabberClass:tryRelease(targetPile)
   if success then
     -- Cards were accepted by the target pile
     self.heldCards = {}
-    print("RELEASE - " .. tostring(self.currentMousePos.x) .. ", " .. tostring(self.currentMousePos.y))
   else
     -- Return cards to the source pile
     if self.sourcePile then

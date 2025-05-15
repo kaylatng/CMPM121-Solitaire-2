@@ -114,7 +114,6 @@ function CardClass:setFaceDown()
 end
 
 function CardClass:setSolved()
-  print("solve -- " .. tostring(self.suit) .. " " .. tostring(self.value))
   self.faceUp = true
   self.solved = true
 end

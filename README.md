@@ -41,10 +41,6 @@ The main pain points of my code was repetitive functions or conditions. A cleane
 
 Sprites: Modified/scaled up spritesheet from https://emptysevenone.itch.io/playing-cards. All other sprites are made by me. \
 Font: N/A \
-Music: \
-card shuffle_deal.wav: https://freesound.org/people/crispy527/sounds/53662/ \
-Card shuffling.mp3: https://freesound.org/people/SomeoneCool15/sounds/423767/ \
-Jingle_Win_Synth_06.wav: https://freesound.org/people/LittleRobotSoundFactory/sounds/274181/ \
-Electro win sound: https://freesound.org/people/Unlistenable/sounds/391539/ \
+Music: Jingle_Win_Synth_06.wav: https://freesound.org/people/LittleRobotSoundFactory/sounds/274181/ \
 Misc: Code snippets from CMPM 121 live coding examples used. \
 I didn’t make any of the assets in this project.

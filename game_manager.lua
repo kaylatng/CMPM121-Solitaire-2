@@ -5,7 +5,6 @@ require "vector"
 require "pile"
 require "grabber"
 require "undo"
-require "sound"
 
 GameManager = {}
 
