@@ -18,7 +18,7 @@ FLYWEIGHT\
 Flyweight is used for the card spritesheet to reduce the amount of files needed to render. I also applied Flyweight Patterns to my constants.lua file, which I reference in various files--these are constants that I use in multiple files, or multiple times and I do not want to change these values separately, or functions that I created to simplify the code in another file. I used this structure in various Javascript projects in CMPM 120, so this practice carried over to CMPM 121.
 
 OBSERVER\
-Observer is used in my update functions of each file, where they check for state changes or conditions to be true.
+Observer is used in my update functions of each file, where they check for state changes or conditions to be true. In my grabber.lua file, it observers when the love game engine picks up a user's mouse click or release, and alerts a card object or stack if it is being picked up. This will change the state of the card object as the program observes the position of the mouse.
 
 SEQUENCING\
 I am also using sequencing patterns, specifically in the update method when I program the game to update and draw cards as the user interacts with the objects.
